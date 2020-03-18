@@ -180,17 +180,17 @@ void Renderer::buildScene()
     sphereGI->setMaterial(0, material);
 
     GeometryGroup GG = context->createGeometryGroup();
-    GG->setAcceleration(context->createAcceleration("Trbvh"));
+    GG->setAcceleration(context->createAcceleration("NoAccel"));
     GG->setChildCount(1);
     GG->setChild(0, sphereGI);
 
     GeometryGroup triGG = context->createGeometryGroup();
-    triGG->setAcceleration(context->createAcceleration("Trbvh"));
+    triGG->setAcceleration(context->createAcceleration("NoAccel"));
     triGG->setChildCount(1);
     triGG->setChild(0, triGI);
 
     Group root = context->createGroup();
-    root->setAcceleration(context->createAcceleration("Trbvh"));
+    root->setAcceleration(context->createAcceleration("NoAccel"));
     root->setChildCount(2);
     root->setChild(0, triGG);
     root->setChild(1, GG);
