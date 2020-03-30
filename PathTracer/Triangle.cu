@@ -35,4 +35,10 @@ RT_PROGRAM void bound(int primIndex, float result[6])
     Triangle tri = triangles[primIndex];
 
     // TODO: implement triangle bouding box
+    result[0] = -1000.f;
+    result[1] = -1000.f;
+    result[2] = -1000.f;
+    result[3] = 1000.f;
+    result[4] = 1000.f;
+    result[5] = 1000.f;
 }
