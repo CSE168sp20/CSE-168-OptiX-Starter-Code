@@ -95,6 +95,9 @@ if( POLICY CMP0072 )
   cmake_policy(SET CMP0072 NEW) 
 endif()
 
+# Use c++11
+set (CMAKE_CXX_STANDARD 11)
+
 # Add paths to our CMake code to the module path, so they can be found automatically by
 # CMake.
 set(CMAKE_MODULE_PATH

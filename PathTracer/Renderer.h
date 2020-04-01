@@ -6,9 +6,11 @@
 
 // STL
 #include <string>
+#include <cstring>
 #include <unordered_map>
 #include <chrono>
 #include <iostream>
+#include <memory>
 
 // Structs to be used for passing info from host to device
 #include "Geometries.h"
