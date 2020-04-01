@@ -19,9 +19,10 @@ In order to compile the samples in the SDK you need the following:
 
 Instructions for building:
 
-1. Install FreeGLUT if you haven't. On Debian or distributions that are based 
-   on Debian (like Ubuntu), you can install FreeGlut using the command
-     $ sudo apt-get install freeglut3-dev
+1. Install OpenGL and FreeGLUT if you haven't. On Debian or distributions 
+   that are based on Debian (like Ubuntu), you can install OpenGL and 
+   FreeGlut using the command
+     $ sudo apt-get install libgl1-mesa-dev freeglut3-dev
 
 2. Create a build directory under the current directory.
 
