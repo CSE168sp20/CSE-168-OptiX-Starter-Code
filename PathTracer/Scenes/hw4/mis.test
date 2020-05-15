@@ -96,8 +96,8 @@ tri 25 26 27
 # back wall
 specular 0 0 0
 diffuse 1 1 1
-tri 28 29 30
-tri 31 30 29
+tri 30 29 28
+tri 29 30 31
 
 
 # overhead light
