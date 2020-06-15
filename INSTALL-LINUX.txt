@@ -38,7 +38,13 @@ Instructions for building:
    to build.
 
 6. You can find the executable, called PathTracer, in the bin directory under 
-   your build directory. The scenes files will be at the same directory. To run 
-   it, cd to bin and then 
-     $ ./PathTracer Scenes/<your scene>
-   where <your scene> is the scene you want to render.
+   your build directory. To run the program, you can run
+     $ <path to the executable> <path to the scene file>
+   For instance, if you are at the top-most directory, which is the parent 
+   directory of the build directory, you can run
+     $ build/bin/PathTracer Scenes/hw1/scene1.test 
+   assuming that your build directory is called "build".
+
+7. When you run it, it should spawn a new window which serves as an image viewer. 
+   When you close the viewer, the generated image will be automatically saved to 
+   the working directory (the one you are currently in).

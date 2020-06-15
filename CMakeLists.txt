@@ -268,7 +268,6 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/sutil
 
 set(SAMPLES_SUPPORT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/support")
 find_package(SUtilGLUT)
-include_directories( ${GLUT_INCLUDE_DIR} )
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/support/mdl-sdk/include/mi/mdl_sdk.h)
   # The MDL_SDK wrapper library can only be built when the MDL SDK is available

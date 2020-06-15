@@ -37,19 +37,29 @@ Instructions for building:
 6. Open the CSE-168.sln solution file in the build directory you created. You 
    can also click "Open Project" in CMake.
 
-7. In the Solution Explorer, you should be able to find a project called 
-   "PathTracer". Right click it and select "Set as StartUp Project". To set 
-   your command line argument, right click it again and select 
-   "Properties" -> "Configuration Properties" -> "Debugging" and modify the 
-   field of "Command Arguments". For example, you can set it to 
-   "Scenes/<your scene>", where <your scene> is the scene you want to 
-   render. Now run the program by pressing F5 or ctrl + F5.
+7. You should be able to see a button called "Local Windows Debugger" on the 
+   top. To its left, there is drop down menu whose default value is set to 
+   "Debug". It indicates the configuration of the solution. Set it to "Release"
+   for maximum performance. 
 
-8. The generated images will be located at the "PathTracer" directory under your
-   build directory.
+8. In the Solution Explorer, you should be able to find a project called 
+   "PathTracer". Right click it and select "Set as StartUp Project". Then
+   right click it again and select 
+   "Properties" -> "Configuration Properties" -> "Debugging" 
+   and modify the following fields:
+   * Working Directory - Change "$(ProjectDir)" to "$(ProjectDir)/../..". This
+   will set the working directory to the top-most directory, which contains the
+   directories "PathTracer" and "Scenes". 
+   * Command Arguments - Set it to the scene you want to run. Its path can be 
+   absolute or relative to the working directory. For example, you can set it 
+   to "Scenes/hw1/scene1.test". 
+
+9. Now run the program by pressing F5 or ctrl + F5. It should spawn a new 
+   window which serves as an image viewer. When you close the viewer, the 
+   generated image will be automatically saved to the top-most directory. 
 
 Note that due to the way dependencies are automatically handled for CUDA
 compilation in Visual Studio, if you build again Visual Studio will likely ask
-you to reload your projects.  Please do so.  Subsequent compiles should not
+you to reload your projects. Please do so. Subsequent compiles should not
 result in reloading unless you change the files that are included by a CUDA
 file.

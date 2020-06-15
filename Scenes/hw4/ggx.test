@@ -38,8 +38,8 @@ tri 0 1 2
 tri 3 2 1
 
 # back wall
-tri 4 5 6
-tri 7 6 5
+tri 6 5 4
+tri 5 6 7
 
 # sphere default material settings
 brdf ggx
