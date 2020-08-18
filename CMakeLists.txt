@@ -354,7 +354,7 @@ endfunction()
 # If you wish to start your own sample, you can copy one of the sample's directories.
 # Just make sure you rename all the occurances of the sample's name in the C code as well
 # and the CMakeLists.txt file.
-add_subdirectory(PathTracer)
+add_subdirectory(OptiXRenderer)
 
 # Our sutil library.  The rules to build it are found in the subdirectory.
 add_subdirectory(sutil)
@@ -371,7 +371,7 @@ if(WIN32)
   endif()
   foreach(config ${CMAKE_CONFIGURATION_TYPES})
     cmake_policy(SET CMP0026 OLD)  # disable warning about LOCATION property
-    get_target_property(loc PathTracer ${config}_LOCATION)
+    get_target_property(loc OptiXRenderer ${config}_LOCATION)
     if(loc)
       # A little helper function
       function(copy_dll lib)

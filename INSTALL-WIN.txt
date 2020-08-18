@@ -43,13 +43,13 @@ Instructions for building:
    for maximum performance. 
 
 8. In the Solution Explorer, you should be able to find a project called 
-   "PathTracer". Right click it and select "Set as StartUp Project". Then
-   right click it again and select 
-   "Properties" -> "Configuration Properties" -> "Debugging" 
+   "OptiXRenderer". Right click it and select "Set as StartUp Project". Then
+   right click it again and select "Properties". Change "Configuration" to 
+   "All Configurations". Now go to "Configuration Properties" -> "Debugging" 
    and modify the following fields:
    * Working Directory - Change "$(ProjectDir)" to "$(ProjectDir)/../..". This
    will set the working directory to the top-most directory, which contains the
-   directories "PathTracer" and "Scenes". 
+   directories "OptiXRenderer" and "Scenes". 
    * Command Arguments - Set it to the scene you want to run. Its path can be 
    absolute or relative to the working directory. For example, you can set it 
    to "Scenes/hw1/scene1.test". 
@@ -57,6 +57,10 @@ Instructions for building:
 9. Now run the program by pressing F5 or ctrl + F5. It should spawn a new 
    window which serves as an image viewer. When you close the viewer, the 
    generated image will be automatically saved to the top-most directory. 
+
+10. After you create new source files, remember to add them to 
+    OptiXRenderer/CMakeLists.txt and compile it to make it effective by 
+    ctrl + F7. A prompt will show up and you should choose "Reload All".   
 
 Note that due to the way dependencies are automatically handled for CUDA
 compilation in Visual Studio, if you build again Visual Studio will likely ask

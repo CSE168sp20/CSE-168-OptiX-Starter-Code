@@ -102,7 +102,7 @@ std::vector<unsigned char> Renderer::getResult()
 Program Renderer::createProgram(const std::string& filename, 
     const std::string& programName)
 {
-    const char* ptx = sutil::getPtxString("PathTracer", filename.c_str());
+    const char* ptx = sutil::getPtxString("OptiXRenderer", filename.c_str());
     return context->createProgramFromPTXString(ptx, programName);
 }
 
