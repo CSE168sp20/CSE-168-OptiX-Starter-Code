@@ -12,6 +12,8 @@ rtDeclareVariable(rtObject, root, , ); // Optix graph
 
 rtDeclareVariable(uint2, launchIndex, rtLaunchIndex, ); // a 2d index (x, y)
 
+rtDeclareVariable(int1, frameID, , );
+
 // Camera info 
 
 // TODO:: delcare camera varaibles here

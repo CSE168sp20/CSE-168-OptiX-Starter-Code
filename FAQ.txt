@@ -1,0 +1,115 @@
+1. I tried to add new source files in Visual Studio but it doesn't work even
+   though I have added them to OptiXRenderer/CMakeLists.txt and compiled it.
+   What's wrong? 
+
+   When adding a new file in Visual Studio, pay attention to the path to which 
+   the file is added. Sometimes, it points to OptiXRenderer/build while the 
+   correct path should be OptiXRenderer/. 
+
+
+
+
+2. I want to pass some variables from host to device but I hate having to declare
+   them one by one. Is it possible to pass them all at once? 
+
+   The answer is yes. Remember that rtBuffers allow custom types. You can create 
+   a struct called "Config", for instance, and add the variables you want to 
+   pass to this struct. Then, you can create an rtBuffer containing this struct 
+   and pass the buffer instead. Now you can access your variables through the 
+   buffer without declaring them one by one. 
+
+
+
+
+3. How do I generate random numbers on device? 
+
+   There is a random.h file you can use. Include it in your .cu files that 
+   need random number generation. Then, create a seed of type unsigned int:
+       unsigned int seed = ...;
+   This seed will determine the random number sequence you get (look up pseudo 
+   random number if you are not familiar). If you set it to a fixed number, 
+   it will give every pixel the same random number sequence, which is terrible
+   as it will produce some weird artifacts that take you days to debug! The 
+   best way is to use the tea() function that comes with random.h: 
+       unsigned int seed = tea<16>(launchIndex.x, launchIndex.y);
+   This line will give you a seed that varies between pixels. To get a random
+   number from the seed, simply call:
+       float x = rnd(seed);
+   This will give you a random floating point number between 0 and 1. Sometimes,
+   you might want varying seeds within a single pixel as well. For example, 
+   your rays will have multiple bounces and it's important that each bounce 
+   has a different seed. You can do something like this: 
+       size_t2 resultSize = resultBuffer.size();
+       unsigned int index = launchIndex.x * resultSize.y + launchIndex.y;
+       ...
+       unsigned int seed = tea<16>(index, CURRENT_DEPTH);
+    
+
+
+
+4. How do I add a new integrator?
+
+   In future assignments, we will introduce new integrators. If you implement it 
+   in one file, RayTracer.cu for instance, you will end up having a massive file 
+   which is hard to read and maintain. Thus, it's a good idea to separate them 
+   into different files. Take assignment 2 as an example. You will need a new  
+   integrator called "Analytic Direct". To get started, you can make a copy of 
+   RayTracer.cu and name it AnalyticDirect.cu. Then, in Renderer::initPrograms(),
+   there is a line:
+       programs["raytracer"] = createProgram("RayTracer.cu", "closestHit");
+   This create an integrator from RayTracer.cu. Similarly, you can do:
+       programs["analyticdirect"] = createProgram("AnalyticDirect.cu", "closestHit");
+   Notice that the program name appears in the scene file too! This is helpful 
+   because later in Renderer::buildScene(), we have:
+       programs["integrator"] = programs[scene->integratorName];
+   It will set the integrator based on the integrator name in the scene file. Now,
+   you are all set. 
+
+
+
+
+5. Is it possible to define helper functions in cuda files? 
+
+   Yes. Check out random.h. Basically, just define a function as usual but 
+   add 
+       static __host__ __device__ __inline__ ...
+   to the front. Be aware that if this function is only used in device, 
+   which should be the case most of the time, you should get rid of 
+   "__host__". To make it efficient, this kind of helper functions should 
+   be short. For BRDF functions, like eval(), sample(), pdf(), it's better
+   to use callerable program 
+   (https://raytracing-docs.nvidia.com/optix6/guide_6_5/index.html#programs#callable-programs).
+   However, this feature is rather advanced so I will stop here. 
+
+
+
+
+6. How do I get a progressive viewer for my path tracer? 
+
+   A progressive viewer allows you to see samples being accumulated to the final
+   image. It's super cool if you are running a path tracer with it because you 
+   can see your image go from noisy to smooth over time. Also, since you don't 
+   need to wait until the end to see the image, it gives you a quick preview 
+   and that's helpful for debugging. Essentially, given n spp to render, instead
+   of thinking we need to average n samples for each pixel, we can think of
+   it as averaging n images. That is, even if we are done yet, let's say we only 
+   get x (0 < x <= n) images rendered, we can still present the intermediate 
+   result by averaging the x images! To do that, simply modify PinholeCamera.cu 
+   to render only one sample/frame at a time. Remember to modify the seed based 
+   on frameID, a variable that is given to you. Then, add these lines to the end:
+       if (frameID.x == 1) 
+       resultBuffer[launchIndex] = result;
+       else
+       {
+           float u = 1.0f / (float)frameID.x;
+           float3 oldResult = resultBuffer[launchIndex];
+           resultBuffer[launchIndex] = lerp(oldResult, result, u);
+       }
+   Basically, these lines accumulate each frame using lerp() and store the result 
+   to resultBuffer. Finally, go to Renderer::buildScene() and change numFrames from
+   1 to spp. If you want to know how it work, follow Renderer::run().
+
+
+   
+   
+
